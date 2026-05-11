@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CIPS L3M2 LO1 – Interactive Quiz</title>
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f4f6f9;
+        padding: 30px;
+        color: #333;
+    }
+
+    .quiz-container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    .question-card {
+        background: #ffffff;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+        margin-top: 0;
+        color: #003a8f;
+    }
+
+    .scenario {
+        background: #eef4ff;
+        padding: 15px;
+        border-left: 5px solid #003a8f;
+        margin-bottom: 15px;
+        font-style: italic;
+    }
+
+    .options label {
+        display: block;
+        padding: 10px;
+        margin-bottom: 8px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .options input {
+        margin-right: 10px;
+    }
+
+    .options label:hover {
+        background: #f0f7ff;
+    }
+
+    .feedback {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 6px;
+        display: none;
+    }
+
+    .correct {
+        background: #e6f7ec;
+        border: 1px solid #2e8b57;
+        color: #2e8b57;
+    }
+
+    .incorrect {
+        background: #fdecea;
+        border: 1px solid #b00020;
+        color: #b00020;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 18px;
+        background: #003a8f;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    button:hover {
+        background: #002b6b;
+    }
+</style>
+</head>
+
+<body>
+<div class="quiz-container">
+
+<!-- QUESTION 1 (Single Choice) -->
+<div class="question-card">
+<h2>Question 1: Understanding Value</h2>
+
+<div class="scenario">
+A procurement team is reviewing a supplier's proposal for a new product. The supplier has offered a higher-priced option but claims it delivers better durability and customer satisfaction. The team debates whether the product represents good value.
+</div>
+
+<p><strong>How is value best assessed in this scenario?</strong></p>
+
+<div class="options">
+<label><input type="radio" name="q1" value="A"> The lowest price available</label>
+<label><input type="radio" name="q1" value="B"> Whether customers are willing to pay for it</label>
+<label><input type="radio" name="q1" value="C"> The supplier's profit margin</label>
+<label><input type="radio" name="q1" value="D"> The number of units sold</label>
+</div>
+
+<button onclick="checkQ1()">Check answer</button>
+
+<div id="feedback-q1" class="feedback"></div>
+</div>
+
+<!-- QUESTION 6 (Multi-select) -->
+<div class="question-card">
+<h2>Question 6: Sources of Added Value</h2>
+
+<div class="scenario">
+A procurement team is reviewing how suppliers can add value beyond just reducing cost.
+</div>
+
+<p><strong>Which are sources of added value? (Select TWO)</strong></p>
+
+<div class="options">
+<label><input type="checkbox" value="A"> Brand reputation</label>
+<label><input type="checkbox" value="B"> Convenience</label>
+<label><input type="checkbox" value="C"> Increasing waste</label>
+<label><input type="checkbox" value="D"> Delays in delivery</label>
+</div>
+
+<button onclick="checkQ6()">Check answer</button>
+
+<div id="feedback-q6" class="feedback"></div>
+</div>
+
+</div>
+
+<script>
+function checkQ1() {
+    const feedback = document.getElementById("feedback-q1");
+    const selected = document.querySelector('input[name="q1"]:checked');
+
+    if (!selected) {
+        feedback.style.display = "block";
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = "Please select an answer.";
+        return;
+    }
+
+    if (selected.value === "B") {
+        feedback.className = "feedback correct";
+        feedback.innerHTML = "<strong>Correct.</strong><br>Value is determined by whether the customer perceives the product as worth paying for, not simply by its cost.";
+    } else {
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = "<strong>Incorrect.</strong><br>Lowest price, supplier margin, or sales volume do not define value. Value is based on customer perception and willingness to pay.";
+    }
+
+    feedback.style.display = "block";
+}
+
+function checkQ6() {
+    const feedback = document.getElementById("feedback-q6");
+    const checkboxes = document.querySelectorAll('.question-card:nth-of-type(2) input[type="checkbox"]');
+    let selected = [];
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) selected.push(cb.value);
+    });
+
+    const correctAnswers = ["A", "B"];
+
+    if (selected.length !== 2) {
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = "Please select TWO options.";
+        feedback.style.display = "block";
+        return;
+    }
+
+    selected.sort();
+    correctAnswers.sort();
+
+    if (JSON.stringify(selected) === JSON.stringify(correctAnswers)) {
+        feedback.className = "feedback correct";
+        feedback.innerHTML = "<strong>Correct.</strong><br>Brand reputation and convenience are sources of added value beyond cost reduction.";
+    } else {
+        feedback.className = "feedback incorrect";
+        feedback.innerHTML = "<strong>Incorrect.</strong><br>Increasing waste and delays reduce value rather than add it.";
+    }
+
+    feedback.style.display = "block";
+}
+</script>
+
+</body>
+</html>
